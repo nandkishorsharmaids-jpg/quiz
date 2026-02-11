@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Ids_Quiz::quiz"
+             title="Quiz"
+             module="Ids_Quiz"
+             sortOrder="90"
+             parent="Magento_Backend::content"
+             resource="Ids_Quiz::quiz"/>
+        <add id="Ids_Quiz::manage"
+             title="Manage Quizzes"
+             module="Ids_Quiz"
+             sortOrder="10"
+             parent="Ids_Quiz::quiz"
+             action="idsquiz/quiz/index"
+             resource="Ids_Quiz::manage"/>
+    </menu>
+</config>

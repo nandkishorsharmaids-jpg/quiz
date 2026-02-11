@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="ids_quiz" resource="default" engine="innodb" comment="Quiz Master Table">
+        <column xsi:type="int" name="quiz_id" nullable="false" identity="true" unsigned="true" comment="Quiz ID"/>
+        <column xsi:type="varchar" name="title" nullable="false" length="255" comment="Quiz Title"/>
+        <column xsi:type="text" name="description" nullable="true" comment="Quiz Description"/>
+        <column xsi:type="smallint" name="is_active" nullable="false" default="1" comment="Is Active"/>
+        <column xsi:type="timestamp" name="created_at" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" nullable="false" default="CURRENT_TIMESTAMP" on_update="true" comment="Updated At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="quiz_id"/>
+        </constraint>
+    </table>
+
+    <table name="ids_quiz_question" resource="default" engine="innodb" comment="Quiz Questions">
+        <column xsi:type="int" name="question_id" nullable="false" identity="true" unsigned="true" comment="Question ID"/>
+        <column xsi:type="int" name="quiz_id" nullable="false" unsigned="true" comment="Quiz ID"/>
+        <column xsi:type="text" name="question_text" nullable="false" comment="Question Text"/>
+        <column xsi:type="smallint" name="sort_order" nullable="false" default="0" comment="Sort Order"/>
+        <column xsi:type="timestamp" name="created_at" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="question_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="IDS_QUIZ_QUESTION_QUIZ_ID_IDS_QUIZ_QUIZ_ID"
+                    table="ids_quiz_question" column="quiz_id" referenceTable="ids_quiz" referenceColumn="quiz_id"
+                    onDelete="CASCADE"/>
+        <index referenceId="IDS_QUIZ_QUESTION_QUIZ_ID" indexType="btree">
+            <column name="quiz_id"/>
+        </index>
+    </table>
+
+    <table name="ids_quiz_option" resource="default" engine="innodb" comment="Quiz Options">
+        <column xsi:type="int" name="option_id" nullable="false" identity="true" unsigned="true" comment="Option ID"/>
+        <column xsi:type="int" name="question_id" nullable="false" unsigned="true" comment="Question ID"/>
+        <column xsi:type="text" name="option_text" nullable="false" comment="Option Text"/>
+        <column xsi:type="smallint" name="is_correct" nullable="false" default="0" comment="Is Correct Option"/>
+        <column xsi:type="smallint" name="sort_order" nullable="false" default="0" comment="Sort Order"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="option_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="IDS_QUIZ_OPTION_QUESTION_ID_IDS_QUIZ_QUESTION_QUESTION_ID"
+                    table="ids_quiz_option" column="question_id" referenceTable="ids_quiz_question" referenceColumn="question_id"
+                    onDelete="CASCADE"/>
+        <index referenceId="IDS_QUIZ_OPTION_QUESTION_ID" indexType="btree">
+            <column name="question_id"/>
+        </index>
+    </table>
+
+    <table name="ids_quiz_result" resource="default" engine="innodb" comment="Quiz Results">
+        <column xsi:type="int" name="result_id" nullable="false" identity="true" unsigned="true" comment="Result ID"/>
+        <column xsi:type="int" name="quiz_id" nullable="false" unsigned="true" comment="Quiz ID"/>
+        <column xsi:type="int" name="customer_id" nullable="true" unsigned="true" comment="Customer ID"/>
+        <column xsi:type="varchar" name="visitor_identifier" nullable="true" length="255" comment="Visitor Identifier"/>
+        <column xsi:type="int" name="score" nullable="false" default="0" comment="Score"/>
+        <column xsi:type="int" name="total_questions" nullable="false" default="0" comment="Total Questions"/>
+        <column xsi:type="timestamp" name="created_at" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="result_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="IDS_QUIZ_RESULT_QUIZ_ID_IDS_QUIZ_QUIZ_ID"
+                    table="ids_quiz_result" column="quiz_id" referenceTable="ids_quiz" referenceColumn="quiz_id"
+                    onDelete="CASCADE"/>
+        <index referenceId="IDS_QUIZ_RESULT_QUIZ_ID" indexType="btree">
+            <column name="quiz_id"/>
+        </index>
+    </table>
+</schema>

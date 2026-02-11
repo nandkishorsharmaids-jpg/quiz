@@ -1,0 +1,23 @@
+<div class="ids-quiz-wrapper" id="ids-quiz-wrapper" data-mage-init='{"Ids_Quiz/js/quiz-ajax": {"submitUrl": "<?= $block->escapeUrl($block->getUrl('idsquiz/ajax/submit')) ?>"}}'>
+    <h2><?= $block->escapeHtml(__('Quick Quiz')) ?></h2>
+
+    <form id="ids-quiz-form">
+        <div class="quiz-question">
+            <p><?= $block->escapeHtml(__('1) What is the capital of France?')) ?></p>
+            <label><input type="radio" name="answers[q1]" value="paris"> <?= $block->escapeHtml(__('Paris')) ?></label>
+            <label><input type="radio" name="answers[q1]" value="madrid"> <?= $block->escapeHtml(__('Madrid')) ?></label>
+        </div>
+
+        <div class="quiz-question">
+            <p><?= $block->escapeHtml(__('2) What is 2 + 2?')) ?></p>
+            <label><input type="radio" name="answers[q2]" value="4"> <?= $block->escapeHtml(__('4')) ?></label>
+            <label><input type="radio" name="answers[q2]" value="5"> <?= $block->escapeHtml(__('5')) ?></label>
+        </div>
+
+        <button class="action primary ids-quiz-submit" type="submit">
+            <?= $block->escapeHtml(__('Submit Quiz')) ?>
+        </button>
+    </form>
+
+    <div class="ids-quiz-result" id="ids-quiz-result" aria-live="polite"></div>
+</div>
